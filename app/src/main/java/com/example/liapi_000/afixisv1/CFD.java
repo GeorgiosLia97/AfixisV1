@@ -57,14 +57,24 @@ public class CFD extends FragmentActivity implements OnMapReadyCallback, GoogleM
             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Criteria criteria = new Criteria();
 
-            Location myLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-            double latitude = myLocation.getLatitude();
+            //Location myLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+           /* double latitude = myLocation.getLatitude();
             double longtitude = myLocation.getLongitude();
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longtitude),1));
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
                     .build();                   // Creates a CameraPosition from the builder
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));   */
+            mMap.setMyLocationEnabled(true);
+
+            location = mMap.getMyLocation();
+
+            if (location != null) {
+                LatLng myLocation = new LatLng(location.getLatitude(),
+                        location.getLongitude());
+
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom((myLocation), 1));
+            }
            // return;
         }
 
