@@ -98,6 +98,15 @@ public class CFD extends FragmentActivity implements OnMapReadyCallback, GoogleM
         setContentView(R.layout.activity_cfd);
     }
 
+    public void onClickBack(View view){
+        setContentView(R.layout.mm);
+    }
+
+    public void onClickExit(View view){
+        finish();
+        System.exit(0);
+    }
+
     @Override
     public boolean onMyLocationButtonClick() {
         return false;
