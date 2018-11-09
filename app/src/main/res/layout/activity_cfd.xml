@@ -2,42 +2,30 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="400dp"
     android:orientation="horizontal"
     android:visibility="visible">
 
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Button"
-        android:visibility="visible" />
-</LinearLayout>
-
-
-
-
-
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:orientation="horizontal">
-
-
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:map="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context="com.example.liapi_000.afixisv1.CFD" />
+            android:layout_height="295dp">
 
-    </LinearLayout>
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="396dp"
+                android:layout_height="289dp"
+                tools:context="com.example.liapi_000.afixisv1.CFD" />
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>
