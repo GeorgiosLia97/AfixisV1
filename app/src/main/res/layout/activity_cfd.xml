@@ -5,25 +5,39 @@
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="400dp"
+    android:layout_height="510dp"
     android:orientation="horizontal"
     android:visibility="visible">
 
 
     <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="517dp">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="295dp">
+            android:layout_height="500dp">
 
             <fragment
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="396dp"
-                android:layout_height="289dp"
+                android:layout_height="450dp"
                 tools:context="com.example.liapi_000.afixisv1.CFD" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:paddingTop="8dp">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Back" />
         </TableRow>
 
     </TableLayout>
