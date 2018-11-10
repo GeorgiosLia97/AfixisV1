@@ -56,11 +56,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
 
     int[] tables = new int[11] ;
     Random generator = new Random();
-		for(int i=0;i<tables.length; i++)
-    {
-        tables[i] = generator.nextInt(3);
-    }
-    Premise p1 = new Premise("1","onoma", tables, 40.595385, 22.9520);
+
     LocationListener locationListener;
     private FusedLocationProviderClient mFusedLocationClient;
   //  protected GeoDataClient mGeoDataClient;
@@ -74,6 +70,17 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+        for(int i=0; i < 11; i++)
+        {
+            tables[i] = generator.nextInt(3);
+        }
+        Premise p1 = new Premise("1","onoma", tables, 40.595385, 22.9520);
+
+
+
+
 
         // Construct a GeoDataClient.
         mGeoDataClient = Places.getGeoDataClient(this);
