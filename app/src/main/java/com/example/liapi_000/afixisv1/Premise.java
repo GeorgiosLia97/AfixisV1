@@ -10,18 +10,38 @@ public class Premise{
     int used = 0;
     int [] tables;
     int soonAvailable = 0;
+    int stat = 0;
 
 
 
-
-    public Premise(String id, String name, int[] tables, double latitude, double longtitude) {
+    public Premise(String id, String name, int[] tables, LatLng loc) {
         this.id = id;
         this.name = name;
         this.tables = tables;
-        location = new LatLng(latitude,longtitude);
+       this.location = loc;
         makeData();
     }
 
+    public int status(String id){
+
+
+        if(available > 5) {
+            stat = 1;
+
+        }else{ if(available == 0) {
+            stat = 0;
+                   } if( available < 5 && soonAvailable > 2) {
+                        stat = 2;
+        }
+        }
+
+        return stat;
+    }
+
+    public int getStatus(){
+       stat =  status(this.id);
+        return stat;
+    }
 
 
 
@@ -109,8 +129,8 @@ public class Premise{
     }
 
 
-    public int[] getTotalTables() {
-        return tables;
+    public int getTotalTables() {
+        return tables.length;
     }
 
 

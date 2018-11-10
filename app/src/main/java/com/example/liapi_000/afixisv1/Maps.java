@@ -32,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -50,12 +51,15 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
     LocationManager locationManager;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     Marker marker;
-    Marker [] onMarkers;
-    LatLng [] onLangs;
-    String [] onDescrpts;
+    Marker [] onMarkers = new Marker[3];
+    LatLng [] onLangs = new LatLng[3];
+    String [] onDescrpts = new String[3];
 
     int[] tables = new int[11] ;
     Random generator = new Random();
+    Premise [] p = new Premise[3];
+    double lat = 0;
+    double lang = 0;
 
     LocationListener locationListener;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -76,7 +80,28 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
         {
             tables[i] = generator.nextInt(3);
         }
-        Premise p1 = new Premise("1","onoma", tables, 40.595385, 22.9520);
+        lat = 40.59483;
+        lang = 22.95277;
+         onLangs[0] = new LatLng(lat, lang);
+         p[0] = new Premise("1","onoma1", tables,  onLangs[0] );
+
+        for(int i=0; i < 11; i++)
+        {
+            tables[i] = generator.nextInt(3);
+        }
+         lat = 40.59484;
+         lang = 22.95002;
+        onLangs[1] = new LatLng(lat, lang);
+         p[1] = new Premise("2","onoma2", tables,  onLangs[1]);
+
+        for(int i=0; i < 11; i++)
+        {
+            tables[i] = generator.nextInt(3);
+        }
+         lat = 40.59415;
+         lang = 22.95106;
+        onLangs[2] = new LatLng(lat, lang);
+         p[2] = new Premise("3","onoma3", tables,onLangs[2]  );
 
 
 
@@ -153,12 +178,12 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
                     LatLng latLng = new LatLng(latitude, longitude);
                     if (marker != null) {
                         marker.remove();
-                        marker = mMap.addMarker(new MarkerOptions().position(latLng).title(result));
+                        marker = mMap.addMarker(new MarkerOptions().position(latLng).title(result).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
                         mMap.setMaxZoomPreference(50);
                        // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
                     } else {
-                        marker = mMap.addMarker(new MarkerOptions().position(latLng).title(result));
+                        marker = mMap.addMarker(new MarkerOptions().position(latLng).title(result).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
                         mMap.setMaxZoomPreference(50);
                        // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
@@ -170,6 +195,32 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
                 }
 
 
+
+
+              if( p[0].getStatus() == 1) {
+                  onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[0].getName() + p[0].getStatus() + p[0].getTotalTables() + p[0].getAvailable() + p[0].getUnavailable()));
+              } else    if( p[0].getStatus() == 0) {
+                  onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[0].getName()+ p[0].getStatus() + p[0].getTotalTables() + p[0].getAvailable() + p[0].getUnavailable()));
+                         }else if( p[0].getStatus() == 2) {
+                    onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[0].getName()+ p[0].getStatus() + p[0].getTotalTables() + p[0].getAvailable() + p[0].getUnavailable()));
+                }
+
+
+                if( p[1].getStatus() == 1) {
+                    onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[1].getName()+ p[1].getStatus() + p[1].getTotalTables() + p[1].getAvailable() + p[1].getUnavailable()));
+                } else    if( p[1].getStatus() == 0) {
+                    onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[1].getName()+ p[1].getStatus() + p[1].getTotalTables() + p[1].getAvailable() + p[1].getUnavailable()));
+                }else if( p[1].getStatus() == 2) {
+                    onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[1].getName()+ p[1].getStatus() + p[1].getTotalTables() + p[1].getAvailable() + p[1].getUnavailable()));
+                }
+
+                if( p[2].getStatus() == 1) {
+                    onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[2].getName()+ p[2].getStatus() + p[2].getTotalTables() + p[2].getAvailable() + p[2].getUnavailable()));
+                } else    if( p[2].getStatus() == 0) {
+                    onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[2].getName()+ p[2].getStatus() + p[2].getTotalTables() + p[2].getAvailable() + p[2].getUnavailable()));
+                }else if( p[2].getStatus() == 2) {
+                    onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[2].getName()+ p[2].getStatus() + p[2].getTotalTables() + p[2].getAvailable() + p[2].getUnavailable()));
+                }
             }
 
             @Override
@@ -191,8 +242,6 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
 
-
-      //  omarkers[0] = mMap.addMarker(new MarkerOptions().position(latLng).title(result));
 
 
     }
