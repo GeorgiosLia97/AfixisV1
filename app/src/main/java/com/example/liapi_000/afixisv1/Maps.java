@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 
 public class Maps extends FragmentActivity implements OnMapReadyCallback , GoogleMap.OnPoiClickListener{
@@ -49,9 +50,17 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
     LocationManager locationManager;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     Marker marker;
-    Marker [] omarkers;
-    LatLng [] olangs;
-    String [] odescrpts;
+    Marker [] onMarkers;
+    LatLng [] onLangs;
+    String [] onDescrpts;
+
+    int[] tables = new int[11] ;
+    Random generator = new Random();
+		for(int i=0;i<tables.length; i++)
+    {
+        tables[i] = generator.nextInt(3);
+    }
+    Premise p1 = new Premise("1","onoma", tables, 40.595385, 22.9520);
     LocationListener locationListener;
     private FusedLocationProviderClient mFusedLocationClient;
   //  protected GeoDataClient mGeoDataClient;

@@ -3,9 +3,10 @@ package com.example.liapi_000.afixisv1;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Premise{
+    private String id;
     private String name;
     private int available = 0;
-    //LatLng location = new LatLng();
+    LatLng location;
     int used = 0;
     int [] tables;
     int soonAvailable = 0;
@@ -13,11 +14,15 @@ public class Premise{
 
 
 
-    public Premise(String name, int[] tables) {
+    public Premise(String id, String name, int[] tables, double latitude, double longtitude) {
+        this.id = id;
         this.name = name;
         this.tables = tables;
+        location = new LatLng(latitude,longtitude);
         makeData();
     }
+
+
 
 
     public void makeData(){

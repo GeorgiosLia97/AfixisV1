@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import java.util.Random;
+
 /*
 
 public abstract class CFD extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener,  GoogleApiClient.ConnectionCallbacks,
@@ -290,6 +292,7 @@ public class CFD extends AppCompatActivity {
 
         showMyLocation(view);
         //setContentView(R.layout.activity_cfd);
+
     }
 
     public void showMyLocation(View view) {
