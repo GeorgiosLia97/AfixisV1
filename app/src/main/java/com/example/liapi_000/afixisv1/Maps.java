@@ -2,6 +2,7 @@ package com.example.liapi_000.afixisv1;
 //package com.example.bright.trackmenew;
 
 import android.Manifest;
+import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -13,12 +14,20 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-//import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceDetectionClient;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -44,30 +53,63 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
     private FusedLocationProviderClient mFusedLocationClient;
   //  protected GeoDataClient mGeoDataClient;
 
+    private GeoDataClient mGeoDataClient;
+    private PlaceDetectionClient mPlaceDetectionClient;
+
+    // Used for selecting the current place.
+    private static final int M_MAX_ENTRIES = 5;
+    private String[] mLikelyPlaceNames;
+    private String[] mLikelyPlaceAddresses;
+    private String[] mLikelyPlaceAttributions;
+    private LatLng[] mLikelyPlaceLatLngs;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Construct a GeoDataClient.
+        mGeoDataClient = Places.getGeoDataClient(this);
+
+        // Construct a PlaceDetectionClient.
+        mPlaceDetectionClient = Places.getPlaceDetectionClient(this);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cfd);
+/*
+        int PLACE_PICKER_REQUEST = 1;
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+
+        */
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        // Construct a GeoDataClient.
-       // mGeoDataClient = Places.getGeoDataClient(this, null);
+/*
+        protected void onActivityResult(int requestCode,int resultCode, Intent data) {
+            if (requestCode == PLACE_PICKER_REQUEST) {
+                if (resultCode == RESULT_OK) {
+                    Place place = PlacePicker.getPlace(this, data);
+                    String toastMsg = String.format("Place: %s", place.getName() + "type: " , place.getAddress() + " address: ", place.getAddress() + " type2 " , place.getPlaceTypes());
+                    Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
 
-        // Construct a PlaceDetectionClient.
-        //mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
-
-      /*  int PLACE_PICKER_REQUEST = 1;
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
-        startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
-        PlacePicker.getLatLngBounds();
 */
+
+
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -99,12 +141,12 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
                         marker = mMap.addMarker(new MarkerOptions().position(latLng).title(result));
                         mMap.setMaxZoomPreference(50);
                        // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
                     } else {
                         marker = mMap.addMarker(new MarkerOptions().position(latLng).title(result));
                         mMap.setMaxZoomPreference(50);
                        // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
                     }
 
 
@@ -151,6 +193,32 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
         mMap = googleMap;
 
         mMap.setOnPoiClickListener(this);
+
+       // Service service = new google.Map.places.PlacesService(mMap);
+
+      /*  mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+            @Override
+            // Return null here, so that getInfoContents() is called next.
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                // Inflate the layouts for the info window, title and snippet.
+                View infoWindow = getLayoutInflater().inflate(R.layout.activity_cfd,
+                        (FrameLayout) findViewById(R.id.map), false);
+
+                TextView title = ((TextView) infoWindow.findViewById(R.id.Toast));
+                title.setText(marker.getTitle());
+
+                TextView snippet = ((TextView) infoWindow.findViewById(R.id.Toast));
+                snippet.setText(marker.getSnippet());
+
+                return infoWindow;
+            }
+        });*/
 
         String provider = LocationManager.NETWORK_PROVIDER;
 
@@ -270,11 +338,13 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
     @Override
     public void onPoiClick(PointOfInterest pointOfInterest) {
         Toast.makeText(getApplicationContext(), "Clicked: " +
-                        pointOfInterest.name + "\nPlace ID:" + pointOfInterest.placeId +
-                        "\nLatitude:" + pointOfInterest.latLng.latitude +
-                        " Longitude:" + pointOfInterest.latLng.longitude,
+                        pointOfInterest.name + "\n Place ID:" + pointOfInterest.placeId
+                 ,
                 Toast.LENGTH_SHORT).show();
         ((TextView)findViewById(R.id.Toast)).setText( pointOfInterest.name);
+
+
+
     }
 /*
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -286,4 +356,6 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
             }
         }
     }*/
+
+
 }
