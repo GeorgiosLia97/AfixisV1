@@ -49,6 +49,9 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
     LocationManager locationManager;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     Marker marker;
+    Marker [] omarkers;
+    LatLng [] olangs;
+    String [] odescrpts;
     LocationListener locationListener;
     private FusedLocationProviderClient mFusedLocationClient;
   //  protected GeoDataClient mGeoDataClient;
@@ -57,11 +60,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
     private PlaceDetectionClient mPlaceDetectionClient;
 
     // Used for selecting the current place.
-    private static final int M_MAX_ENTRIES = 5;
-    private String[] mLikelyPlaceNames;
-    private String[] mLikelyPlaceAddresses;
-    private String[] mLikelyPlaceAttributions;
-    private LatLng[] mLikelyPlaceLatLngs;
+
 
 
     @Override
@@ -153,6 +152,8 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
             }
 
             @Override
@@ -174,6 +175,8 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
 
+
+      //  omarkers[0] = mMap.addMarker(new MarkerOptions().position(latLng).title(result));
 
 
     }
