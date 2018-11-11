@@ -191,7 +191,7 @@ public abstract class CFD extends FragmentActivity implements OnMapReadyCallback
             // mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
             //       .getMap();
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
+
                 //    ActivityCompat#requestPermissions
                 // here to request the missing permissions, and then overriding
                 //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -209,7 +209,7 @@ public abstract class CFD extends FragmentActivity implements OnMapReadyCallback
 
                     @Override
                     public void onMyLocationChange(Location arg0) {
-                        // TODO Auto-generated method stub
+
 
                         mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
                     }
@@ -300,6 +300,7 @@ public class CFD extends AppCompatActivity {
     }
 
     public void onClickBack(View view){
+        onStop();
         setContentView(R.layout.mm);
     }
 

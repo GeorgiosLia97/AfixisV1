@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class Premise{
     private String id;
     private String name;
-    private int available = 0;
+    int available = 0;
     LatLng location;
     int used = 0;
     int [] tables;
@@ -101,7 +101,7 @@ public class Premise{
 
     public void leaveThePremise(){
         boolean done = false;
-        for(int i: tables){
+        for(int i=0; i<tables.length; i++){
             if(tables[i]==2 && done == false){
                 tables[i] = 1;
                 done = true;

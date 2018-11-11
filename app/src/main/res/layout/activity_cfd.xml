@@ -5,14 +5,14 @@
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="560dp"
+    android:layout_height="600dp"
     android:orientation="horizontal"
     android:visibility="visible">
 
 
     <TableLayout
         android:layout_width="wrap_content"
-        android:layout_height="550dp">
+        android:layout_height="600dp">
 
         <TableRow
             android:layout_width="match_parent"
@@ -29,36 +29,90 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="80dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/Toast"
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
-
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="showMyLocation"
-                android:text="My Loccation"
+                android:text="Availiable"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/A"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:numeric="integer"
+                android:text="Available"
+                android:textColor="@color/colorPrimary"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/U"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unavailable"
+                android:textColor="@color/colorAccent"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/TL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Leave"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="25sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:paddingTop="10dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/Add"
+                android:layout_width="135dp"
+                android:layout_height="wrap_content"
+                android:onClick="onButtonArrive"
+                android:text="Add"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/Leave"
+                android:layout_width="135dp"
+                android:layout_height="wrap_content"
+                android:onClick="onButtonLeave"
+                android:text="Leave"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/Check"
+                android:layout_width="135dp"
+                android:layout_height="wrap_content"
+                android:onClick="onButtonBill"
+                android:text="BILL"
+                android:textSize="18sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/IWG"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onClickBack"
-                android:text="Back" />
+                android:background="@color/design_default_color_primary"
+                android:text="I will go"
+                android:visibility="visible" />
         </TableRow>
 
     </TableLayout>

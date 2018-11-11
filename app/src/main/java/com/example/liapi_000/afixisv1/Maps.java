@@ -15,7 +15,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +62,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
     Premise [] p = new Premise[3];
     double lat = 0;
     double lang = 0;
+    int ftr = 0;
 
     LocationListener locationListener;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -68,12 +71,17 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
     private GeoDataClient mGeoDataClient;
     private PlaceDetectionClient mPlaceDetectionClient;
 
+    public int mic = 0;
+
     // Used for selecting the current place.
+   // private int progressStatus = 0;
+  //  final ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar2);
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
 
         for(int i=0; i < 11; i++)
@@ -103,8 +111,6 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
          lang = 22.95106;
         onLangs[2] = new LatLng(lat, lang);
          p[2] = new Premise("3","onoma3", tables,onLangs[2]  );
-
-
 
 
 
@@ -195,34 +201,14 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
                     e.printStackTrace();
                 }
 
+                refreshMark();
 
 
 
-              if( p[0].getStatus() == 1) {
-                  onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[0].getName() + " Stat " +  p[0].getStatus() + " Tot " + p[0].getTotalTables() +  " Av " + p[0].getAvailable() + " Un " + p[0].getUnavailable()));
-              } else    if( p[0].getStatus() == 0) {
-                  onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[0].getName()+ " Stat " +  p[0].getStatus() + " Tot " + p[0].getTotalTables() +  " Av " + p[0].getAvailable() + " Un " + p[0].getUnavailable()));
-                         }else if( p[0].getStatus() == 2) {
-                    onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[0].getName()+ " Stat " +  p[0].getStatus() + " Tot " + p[0].getTotalTables() +  " Av " + p[0].getAvailable() + " Un " + p[0].getUnavailable()));
-                }
 
-
-                if( p[1].getStatus() == 1) {
-                    onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[1].getName()+ " Stat "+ p[1].getStatus() + " Tot "+ p[1].getTotalTables()  +  " Av "+ p[1].getAvailable() + " Un "+ p[1].getUnavailable()));
-                } else    if( p[1].getStatus() == 0) {
-                    onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[1].getName()+ " Stat "+ p[1].getStatus()+ " Tot " + p[1].getTotalTables()  +  " Av "+ p[1].getAvailable() + " Un "+ p[1].getUnavailable()));
-                }else if( p[1].getStatus() == 2) {
-                    onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[1].getName()+ " Stat "+ p[1].getStatus()+ " Tot " + p[1].getTotalTables()  +  " Av "+ p[1].getAvailable() + " Un "+ p[1].getUnavailable()));
-                }
-
-                if( p[2].getStatus() == 1) {
-                    onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[2].getName()+ " Stat "+ p[2].getStatus()+ " Tot " + p[2].getTotalTables() +  " Av " + p[2].getAvailable()+ " Un " + p[2].getUnavailable()));
-                } else    if( p[2].getStatus() == 0) {
-                    onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[2].getName()+ " Stat "+ p[2].getStatus()+ " Tot " + p[2].getTotalTables()  +  " Av "+ p[2].getAvailable() + " Un "+ p[2].getUnavailable()));
-                }else if( p[2].getStatus() == 2) {
-                    onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[2].getName()+ " Stat "+ p[2].getStatus() + " Tot "+ p[2].getTotalTables()  +  " Av "+ p[2].getAvailable()+ " Un " + p[2].getUnavailable()));
-                }
             }
+
+
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -238,6 +224,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
             public void onProviderDisabled(String provider) {
 
             }
+
         };
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
@@ -247,28 +234,130 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
 
     }
 
+    public void refreshMark(){
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    //  mMap.clear();
+    if( ftr == 0) {
+
+    ftr =1 ;
+    } else {
+        onMarkers[0].remove();
+        onMarkers[1].remove();
+        onMarkers[2].remove();
+    }
+        /*String a = "";
+        String b = "";
+        String c = "";*/
+
+        if( p[0].getStatus() == 1) {
+            onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))); //.title(p[0].getName() + " Stat " +  p[0].getStatus() + " Tot " + p[0].getTotalTables() +  " Av " + p[0].getAvailable() + " Un " + p[0].getUnavailable() + " soon " + p[0].getSoonAvailable()));
+            onMarkers[0].setTitle("0");
+          /* a = String.valueOf(p[0].getAvailable());
+            b = String.valueOf(p[0].getUnavailable());
+            c = String.valueOf(p[0].getSoonAvailable());
+
+            ((TextView) findViewById(R.id.A)).setText( a);
+            ((TextView) findViewById(R.id.U)).setText( b);
+            ((TextView) findViewById(R.id.TL)).setText( c);*/
 
 
-    public void onButtonArrive(){
-        p[1].arriveAtPremise();
+
+        } else    if( p[0].getStatus() == 0) {
+            onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))); //.title(p[0].getName()+ " Stat " +  p[0].getStatus() + " Tot " + p[0].getTotalTables() +  " Av " + p[0].getAvailable() + " Un " + p[0].getUnavailable()+ " soon " + p[0].getSoonAvailable()));
+            /*a = String.valueOf(p[0].getAvailable());
+            b = String.valueOf(p[0].getUnavailable());
+            c = String.valueOf(p[0].getSoonAvailable());
+
+            ((TextView) findViewById(R.id.A)).setText( a);
+            ((TextView) findViewById(R.id.U)).setText( b);
+            ((TextView) findViewById(R.id.TL)).setText( c);*/
+            onMarkers[0].setTitle("0");
+        }else if( p[0].getStatus() == 2) {
+            onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))); //.title(p[0].getName()+ " Stat " +  p[0].getStatus() + " Tot " + p[0].getTotalTables() +  " Av " + p[0].getAvailable() + " Un " + p[0].getUnavailable() + " soon " + p[0].getSoonAvailable()));
+          /*  a = String.valueOf(p[0].getAvailable());
+            b = String.valueOf(p[0].getUnavailable());
+            c = String.valueOf(p[0].getSoonAvailable());
+
+            ((TextView) findViewById(R.id.A)).setText( a);
+            ((TextView) findViewById(R.id.U)).setText( b);
+            ((TextView) findViewById(R.id.TL)).setText( c);*/
+            onMarkers[0].setTitle("0");
+        }
+
+
+        if( p[1].getStatus() == 1) {
+            onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[1].getName()+ " Stat "+ p[1].getStatus() + " Tot "+ p[1].getTotalTables()  +  " Av "+ p[1].getAvailable() + " Un "+ p[1].getUnavailable()));
+            onMarkers[1].setTitle("1");
+        } else    if( p[1].getStatus() == 0) {
+            onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[1].getName()+ " Stat "+ p[1].getStatus()+ " Tot " + p[1].getTotalTables()  +  " Av "+ p[1].getAvailable() + " Un "+ p[1].getUnavailable()));
+            onMarkers[1].setTitle("1");
+        }else if( p[1].getStatus() == 2) {
+            onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[1].getName()+ " Stat "+ p[1].getStatus()+ " Tot " + p[1].getTotalTables()  +  " Av "+ p[1].getAvailable() + " Un "+ p[1].getUnavailable()));
+            onMarkers[1].setTitle("1");
+        }
+
+        if( p[2].getStatus() == 1) {
+            onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[2].getName()+ " Stat "+ p[2].getStatus()+ " Tot " + p[2].getTotalTables() +  " Av " + p[2].getAvailable()+ " Un " + p[2].getUnavailable()));
+            onMarkers[2].setTitle("2");
+        } else    if( p[2].getStatus() == 0) {
+            onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[2].getName()+ " Stat "+ p[2].getStatus()+ " Tot " + p[2].getTotalTables()  +  " Av "+ p[2].getAvailable() + " Un "+ p[2].getUnavailable()));
+            onMarkers[2].setTitle("2");
+        }else if( p[2].getStatus() == 2) {
+            onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[2].getName()+ " Stat "+ p[2].getStatus() + " Tot "+ p[2].getTotalTables()  +  " Av "+ p[2].getAvailable()+ " Un " + p[2].getUnavailable()));
+            onMarkers[2].setTitle("2");
+        }
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                String ct = marker.getTitle();
+                int  id = Integer.parseInt( ct);
+                mic = id;
+                showaval(id);
+                return false;
+            }
+
+
+        });
+
     }
 
-    public void onButtonBill(){
-        p[1].requestBill();
+    public void showaval(int id) {
+
+        String a = "";
+        String b = "";
+        String c = "";
+
+        a = String.valueOf(p[id].getAvailable());
+        b = String.valueOf(p[id].getUnavailable());
+        c = String.valueOf(p[id].getSoonAvailable());
+
+        ((TextView) findViewById(R.id.A)).setText( a);
+        ((TextView) findViewById(R.id.U)).setText( b);
+        ((TextView) findViewById(R.id.TL)).setText( c);
+
     }
 
-    public void onButtonLeave(){
-        p[1].leaveThePremise();
+    public void onButtonArrive(View view){
+
+
+        p[mic].arriveAtPremise();
+        refreshMark();
+        showaval(mic);
+    }
+
+    public void onButtonBill(View view){
+        p[mic].requestBill();
+        refreshMark();
+        showaval(mic);
+    }
+
+    public void onButtonLeave(View view){
+        p[mic].leaveThePremise();
+        refreshMark();
+        showaval(mic);
     }
 
 
@@ -369,6 +458,8 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+
+            
             return;
         }
 
@@ -426,7 +517,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
                         pointOfInterest.name + "\n Place ID:" + pointOfInterest.placeId
                  ,
                 Toast.LENGTH_SHORT).show();
-        ((TextView)findViewById(R.id.Toast)).setText( pointOfInterest.name);
+       // ((TextView)findViewById(R.id.Toast)).setText( pointOfInterest.name);
 
 
 
