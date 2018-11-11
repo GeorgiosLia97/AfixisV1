@@ -257,6 +257,22 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
+
+    public void onButtonArrive(){
+        p[1].arriveAtPremise();
+    }
+
+    public void onButtonBill(){
+        p[1].requestBill();
+    }
+
+    public void onButtonLeave(){
+        p[1].leaveThePremise();
+    }
+
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
