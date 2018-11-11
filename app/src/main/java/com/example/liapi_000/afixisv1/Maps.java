@@ -78,8 +78,9 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
 
         for(int i=0; i < 11; i++)
         {
-            tables[i] = generator.nextInt(3);
+            tables[i] = generator.nextInt(2);
         }
+
         lat = 40.59483;
         lang = 22.95277;
          onLangs[0] = new LatLng(lat, lang);
@@ -198,28 +199,28 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback , Googl
 
 
               if( p[0].getStatus() == 1) {
-                  onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[0].getName() + p[0].getStatus() + p[0].getTotalTables() + p[0].getAvailable() + p[0].getUnavailable()));
+                  onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[0].getName() + " Stat " +  p[0].getStatus() + " Tot " + p[0].getTotalTables() +  " Av " + p[0].getAvailable() + " Un " + p[0].getUnavailable()));
               } else    if( p[0].getStatus() == 0) {
-                  onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[0].getName()+ p[0].getStatus() + p[0].getTotalTables() + p[0].getAvailable() + p[0].getUnavailable()));
+                  onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[0].getName()+ " Stat " +  p[0].getStatus() + " Tot " + p[0].getTotalTables() +  " Av " + p[0].getAvailable() + " Un " + p[0].getUnavailable()));
                          }else if( p[0].getStatus() == 2) {
-                    onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[0].getName()+ p[0].getStatus() + p[0].getTotalTables() + p[0].getAvailable() + p[0].getUnavailable()));
+                    onMarkers[0] = mMap.addMarker(new MarkerOptions().position(onLangs[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[0].getName()+ " Stat " +  p[0].getStatus() + " Tot " + p[0].getTotalTables() +  " Av " + p[0].getAvailable() + " Un " + p[0].getUnavailable()));
                 }
 
 
                 if( p[1].getStatus() == 1) {
-                    onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[1].getName()+ p[1].getStatus() + p[1].getTotalTables() + p[1].getAvailable() + p[1].getUnavailable()));
+                    onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[1].getName()+ " Stat "+ p[1].getStatus() + " Tot "+ p[1].getTotalTables()  +  " Av "+ p[1].getAvailable() + " Un "+ p[1].getUnavailable()));
                 } else    if( p[1].getStatus() == 0) {
-                    onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[1].getName()+ p[1].getStatus() + p[1].getTotalTables() + p[1].getAvailable() + p[1].getUnavailable()));
+                    onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[1].getName()+ " Stat "+ p[1].getStatus()+ " Tot " + p[1].getTotalTables()  +  " Av "+ p[1].getAvailable() + " Un "+ p[1].getUnavailable()));
                 }else if( p[1].getStatus() == 2) {
-                    onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[1].getName()+ p[1].getStatus() + p[1].getTotalTables() + p[1].getAvailable() + p[1].getUnavailable()));
+                    onMarkers[1] = mMap.addMarker(new MarkerOptions().position(onLangs[1]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[1].getName()+ " Stat "+ p[1].getStatus()+ " Tot " + p[1].getTotalTables()  +  " Av "+ p[1].getAvailable() + " Un "+ p[1].getUnavailable()));
                 }
 
                 if( p[2].getStatus() == 1) {
-                    onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[2].getName()+ p[2].getStatus() + p[2].getTotalTables() + p[2].getAvailable() + p[2].getUnavailable()));
+                    onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(p[2].getName()+ " Stat "+ p[2].getStatus()+ " Tot " + p[2].getTotalTables() +  " Av " + p[2].getAvailable()+ " Un " + p[2].getUnavailable()));
                 } else    if( p[2].getStatus() == 0) {
-                    onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[2].getName()+ p[2].getStatus() + p[2].getTotalTables() + p[2].getAvailable() + p[2].getUnavailable()));
+                    onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(p[2].getName()+ " Stat "+ p[2].getStatus()+ " Tot " + p[2].getTotalTables()  +  " Av "+ p[2].getAvailable() + " Un "+ p[2].getUnavailable()));
                 }else if( p[2].getStatus() == 2) {
-                    onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[2].getName()+ p[2].getStatus() + p[2].getTotalTables() + p[2].getAvailable() + p[2].getUnavailable()));
+                    onMarkers[2] = mMap.addMarker(new MarkerOptions().position(onLangs[2]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(p[2].getName()+ " Stat "+ p[2].getStatus() + " Tot "+ p[2].getTotalTables()  +  " Av "+ p[2].getAvailable()+ " Un " + p[2].getUnavailable()));
                 }
             }
 

@@ -25,15 +25,22 @@ public class Premise{
     public int status(String id){
 
 
-        if(available > 5) {
+        if( available >0) {
             stat = 1;
 
-        }else{ if(available == 0) {
-            stat = 0;
-                   } if( available < 5 && soonAvailable > 2) {
+        } else { if( available ==0 && soonAvailable == 0){
+
+                    stat = 0;
+                    }
+                    else {
                         stat = 2;
+                         }
+
+
         }
-        }
+
+
+
 
         return stat;
     }
@@ -58,6 +65,7 @@ public class Premise{
             }
             if(tables[i]==2){
                 soonAvailable++;
+                used ++;
             }
 
         }
